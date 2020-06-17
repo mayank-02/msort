@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+int removeduplicate(double a[], int n) {
+	int i = 0, j = 0, k = 0, flag;
+	while(i < n) {
+		flag = 1;
+		for(j = 0; j < i; j++){
+			if(fabs(a[i] - a[j]) <= 1e-7) {
+				flag = 0;
+				break;
+			}
+		}
+		if(flag) {
+			a[k] = a[i];
+			k++;
+		}
+		i++;
+	}
+	return k;
+}
+
+int main() {
+	int n, i;
+	double *a;
+	scanf("%d", &n);
+	a = (double *)malloc(sizeof(double) * n);
+	for(i = 0; i < n; i++) {
+		scanf("%lf", a + i);
+	}
+	n = removeduplicate(a, n);
+	for(i = 0; i < n; i++) {
+		printf("%lf\n", *(a + i));
+	}
+	return 0;
+}

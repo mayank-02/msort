@@ -1,0 +1,49 @@
+.Dd March 2, 2020
+.Dt MSORT 1
+.Sh NAME
+.Nm msort
+.\"
+.Nd sort lines of a text file
+.\"
+
+.Sh SYNOPSIS
+.Nd
+[OPTION]... [FILE]...
+.\"
+
+.Sh DESCRIPTION
+Write sorted concatenation of all FILE(s) to standard output.
+.br
+.br
+With no FILE, or when FILE is -, read standard input.
+.br
+.br
+
+Ordering options:
+.br
+-b, ignore leading blanks
+.br
+-d, consider only blanks and alphanumeric characters
+.br
+-f, fold lower case to upper case characters
+.br
+-i, consider only printable characters
+.br
+-n, compare according to string numerical value
+.br
+-r, reverse the result of comparisons
+.br
+-k, sort via a key 
+.br
+-m, merge already sorted files; do not sort
+.br
+-o, write result to FILE instead of standard output
+.br
+-u, output only the first of an equal run
+.\"
+
+.Sh AUTHOR
+Written by Mayank Jain
+
+.Sh SEE ALSO
+.Xr sort 1
