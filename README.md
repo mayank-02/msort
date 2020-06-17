@@ -39,6 +39,14 @@ You can uninstall msort using
 > sudo make uninstall
 ```
 
+## Manual Page
+
+Once installed, to check out the manual page for msort, do
+
+```bash
+> man msort
+```
+
 ## Options supported
 
 ```
