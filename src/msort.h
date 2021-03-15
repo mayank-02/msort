@@ -15,17 +15,17 @@ typedef char stringType[STRSIZE];
 typedef stringType bufType[BUFSIZE];
 
 typedef struct mergeLine{
-	bufType line;
-	int nlines;
-	int morelines;
+    bufType line;
+    int nlines;
+    int morelines;
 } mergeLine;
 
 typedef struct key {
-	char line[8];
-	int colstart;
-	int startfrac;
-	int colend;
-	int endfrac;
+    char line[8];
+    int colstart;
+    int startfrac;
+    int colend;
+    int endfrac;
 } key;
 
 extern int optind;
