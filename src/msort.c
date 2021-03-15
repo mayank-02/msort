@@ -1073,6 +1073,10 @@ int main(int argc, char *argv[]) {
         /* No input files were specified, take input from stdin */
         datafile = stdin;
     }
+    else if((strcmp("-", argv[optind]) == 0) && ((optind + 1) == argc)) {
+        /* If a file operand is '-', take input from stdin */
+        datafile = stdin;
+    }
     else if(optind < argc) {
         /* Take arguments after the command line options */
         while(optind < argc) {
