@@ -293,19 +293,23 @@ int numcompare(const void * a, const void * b) {
      * If equal numerical value, check for remainder
      * part of string according to flags
      */
-    if(fabs(x - y) < 1e-6) {
+    if(essentiallyEqual(x, y)) {
         if(uflag) {
             return 0;
         }
-        else
+        else {
             return strcomparelesskey(a, b);
+        }
     }
     else {
-        /* Reverse sense of comparisons if rflag is set */
-        if(rflag)
-            return y - x;
+        if(definitelyGreaterThan(x, y)) {
+            return (rflag ? -1 : 1);
+        }
+        else if(definitelyLessThan(x, y)) {
+            return (rflag ? 1 : -1);
+        }
         else {
-            return x - y;
+            return 0;
         }
     }
 }
@@ -475,11 +479,58 @@ double createNumberfromString(char *a, int i, int j) {
         }
     }
 
-    return (sum + fraction) * negative;;
+    return (sum + fraction) * negative;
 }
 
 /**
- * @brief
+ * @brief Checks if two numbers are equal
+ *
+ * Tells whether the difference between a and b is smaller than the acceptable
+ * error (epsilon), determined by the smaller of a or b. This means that the values
+ * differ less than the acceptable difference in any calculation, so that perhaps
+ * they're not actually equal, but they're "essentially equal" (given the epsilon).
+ *
+ * @param a First number
+ * @param b Second number
+ * @return bool
+ * 		   = 0 if a != b
+ * 		   = 1 if a ~= b
+ * @note Borrowed from https://stackoverflow.com/a/253874
+ */
+int essentiallyEqual(double a, double b) {
+    return fabs(a - b) <= ((fabs(a) > fabs(b) ? fabs(b) : fabs(a)) * EPSILON);
+}
+
+/**
+ * @brief Checks if a is greater than b .
+ *
+ * @param a First number
+ * @param b Second number
+ * @return bool
+ * 		   = 1 if a > b
+ * 		   = 0 if a <= b
+ * @note Borrowed from https://stackoverflow.com/a/253874
+ */
+int definitelyGreaterThan(double a, double b) {
+    return (a - b) > ((fabs (a) < fabs (b) ? fabs (b) : fabs (a)) * EPSILON);
+}
+
+/**
+ * @brief Checks if a is lesser than b .
+ *
+ * @param a First number
+ * @param b Second number
+ * @return bool
+ * 		   = 1 if a < b
+ * 		   = 0 if a >= b
+ * @note Borrowed from https://stackoverflow.com/a/253874
+ */
+int definitelyLessThan(double a, double b) {
+    return (b - a) > ((fabs (a) < fabs (b) ? fabs (b) : fabs (a)) * EPSILON);
+}
+
+/**
+ * @brief Returns position of character in string given a particular column number
  *
  * @param haystack String to be searched in
  * @param needle Character to be searched for (separator)
@@ -616,9 +667,9 @@ int makeSortedRuns(FILE *datafile) {
 
         /* String or numeric sort... */
         if(nflag)
-            qsort(buffer, lines, 1024, numcompare);
+            qsort(buffer, lines, STRSIZE, numcompare);
         else
-            qsort(buffer, lines, 1024, strcompare);
+            qsort(buffer, lines, STRSIZE, strcompare);
 
         /* Make custom name for sorted runs */
         sprintf(outFilename, "temp%d", files);

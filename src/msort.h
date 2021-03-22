@@ -8,7 +8,8 @@
 #include <locale.h>
 
 #define STRSIZE 1024
-#define BUFSIZE 512
+#define BUFSIZE 4096
+#define EPSILON 2.2204460492503131E-16
 
 typedef char stringType[STRSIZE];
 
@@ -40,6 +41,10 @@ char *outFilename = "output", *sep = " ";
 void getkey(key *k);
 int getpos(char *haystack, char *needle, int count);
 double createNumberfromString(char *a, int i, int j);
+
+int essentiallyEqual(double a, double b);
+int definitelyGreaterThan(double a, double b);
+int definitelyLessThan(double a, double b);
 
 int fillBuffer(FILE *datafile, bufType buffer);
 int makeSortedRuns(FILE *datafile);
