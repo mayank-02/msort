@@ -33,7 +33,21 @@ extern int optind;
 
 extern char *optarg;
 
-int bflag, dflag, fflag, iflag, kflag, mflag, nflag, oflag, rflag, tflag, uflag, err;
+struct Options {
+    int bflag;
+    int dflag;
+    int fflag;
+    int hflag;
+    int iflag;
+    int kflag;
+    int mflag;
+    int nflag;
+    int oflag;
+    int rflag;
+    int tflag;
+    int uflag;
+    int err;
+};
 
 key key1;
 char *outFilename = "output", *sep = " ";
