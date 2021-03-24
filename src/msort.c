@@ -1,5 +1,7 @@
 #include "msort.h"
 
+struct Options options;
+
 /**
  * @brief Compare two strings based on keys pointed by void pointers
  *
@@ -24,7 +26,7 @@ int strcompare(const void * a, const void * b) {
     int s_gpstart, t_gpstart, s_gpend, t_gpend;
     i = j = 0;
 
-    if(bflag) {
+    if(options.bflag) {
         /* Ignore leading white spaces */
         while(isspace(s[i]))
             i++;
@@ -38,7 +40,7 @@ int strcompare(const void * a, const void * b) {
     endpos1 = length1;
     endpos2 = length2;
 
-    if(kflag) {
+    if(options.kflag) {
         /* Get start and end indices based on keys */
         s_gpstart = getpos(s, sep, key1.colstart);
         t_gpstart = getpos(t, sep, key1.colstart);
@@ -101,7 +103,7 @@ int strcompare(const void * a, const void * b) {
 
     do {
         /* Ignore non-printing characters */
-        if(iflag) {
+        if(options.iflag) {
             while(!isprint(s[i]))
                 i++;
             while(!isprint(t[j]))
@@ -109,7 +111,7 @@ int strcompare(const void * a, const void * b) {
         }
 
         /* Consider only alphanumeric and white spaces */
-        if(dflag) {
+        if(options.dflag) {
             while(i < endpos1 && !isalnum(s[i])
                     && !isspace(s[i]) && s[i] != '\0')
                 i++;
@@ -119,7 +121,7 @@ int strcompare(const void * a, const void * b) {
         }
         if(i < endpos1 && j < endpos2) {
             /* Ignore case */
-            if(fflag) {
+            if(options.fflag) {
                 x = tolower(s[i++]);
                 y = tolower(t[j++]);
             }
@@ -129,7 +131,7 @@ int strcompare(const void * a, const void * b) {
             }
 
             if((x == '\t') && (y == '\n')) {
-                if(rflag) {
+                if(options.rflag) {
                     return -1;
                 }
                 else {
@@ -138,7 +140,7 @@ int strcompare(const void * a, const void * b) {
             }
 
             if((x == '\n') && (y == '\t')) {
-                if(rflag) {
+                if(options.rflag) {
                     return 1;
                 }
                 else {
@@ -154,7 +156,7 @@ int strcompare(const void * a, const void * b) {
 
                 /* First string smaller than second */
                 if(i == endpos1 && j!= endpos2) {
-                    if(rflag) {
+                    if(options.rflag) {
                         return -1;
                     }
                     else {
@@ -164,7 +166,7 @@ int strcompare(const void * a, const void * b) {
 
                 /* Second string smaller than first */
                 if(i != endpos1 && j == endpos2) {
-                    if(rflag) {
+                    if(options.rflag) {
                         return 1;
                     }
                     else {
@@ -174,11 +176,11 @@ int strcompare(const void * a, const void * b) {
 
                 /* Keys are exactly same */
                 if(i == endpos1 && j == endpos2) {
-                    if(uflag) {
+                    if(options.uflag) {
                         return 0;
                     }
                     else {
-                        if(rflag)
+                        if(options.rflag)
                             return strcmp(t, s);
                         else
                             return strcmp(s, t);
@@ -189,7 +191,7 @@ int strcompare(const void * a, const void * b) {
     } while(x == y && i < endpos1 && j < endpos2);
 
     /* Reverse sense of comparisons if rflag is set*/
-    if(rflag)
+    if(options.rflag)
         return y - x;
     else
         return x - y;
@@ -218,7 +220,7 @@ int numcompare(const void * a, const void * b) {
     int length1 = strlen(s), length2 = strlen(t);
     int s_gpstart, t_gpstart, s_gpend, t_gpend;
 
-    if(bflag) {
+    if(options.bflag) {
         /* Ignore leading white spaces */
         while(isspace(s[i]))
             i++;
@@ -232,7 +234,7 @@ int numcompare(const void * a, const void * b) {
     endpos1 = length1;
     endpos2 = length2;
 
-    if(kflag) {
+    if(options.kflag) {
         /* Get start and end indices based on keys */
         s_gpstart = getpos(s, sep, key1.colstart);
         t_gpstart = getpos(t, sep, key1.colstart);
@@ -294,7 +296,7 @@ int numcompare(const void * a, const void * b) {
      * part of string according to flags
      */
     if(essentiallyEqual(x, y)) {
-        if(uflag) {
+        if(options.uflag) {
             return 0;
         }
         else {
@@ -303,10 +305,10 @@ int numcompare(const void * a, const void * b) {
     }
     else {
         if(definitelyGreaterThan(x, y)) {
-            return (rflag ? -1 : 1);
+            return (options.rflag ? -1 : 1);
         }
         else if(definitelyLessThan(x, y)) {
-            return (rflag ? 1 : -1);
+            return (options.rflag ? 1 : -1);
         }
         else {
             return 0;
@@ -340,7 +342,7 @@ int strcomparelesskey(const void * a, const void * b) {
     endpos1 = length1;
     endpos2 = length2;
 
-    if(bflag) {
+    if(options.bflag) {
         /* Ignore leading white spaces */
         while(isspace(s[i]))
             i++;
@@ -350,14 +352,14 @@ int strcomparelesskey(const void * a, const void * b) {
 
     do {
         /* Ignore non-printing characters */
-        if(iflag) {
+        if(options.iflag) {
             while(!isprint(s[i]))
                 i++;
             while(!isprint(t[j]))
                 j++;
         }
         /* Consider only alphanumeric and white spaces */
-        if(dflag) {
+        if(options.dflag) {
             while(i < endpos1 && !isalnum(s[i])
                     && !isspace(s[i])  && s[i] != '\0')
                 i++;
@@ -367,7 +369,7 @@ int strcomparelesskey(const void * a, const void * b) {
         }
         if(i < endpos1 && j < endpos2) {
             /* Ignore case */
-            if(fflag) {
+            if(options.fflag) {
                 x = tolower(s[i++]);
                 y = tolower(t[j++]);
             }
@@ -377,7 +379,7 @@ int strcomparelesskey(const void * a, const void * b) {
             }
 
             if((x == '\t') && (y == '\n')) {
-                if(rflag) {
+                if(options.rflag) {
                     return -1;
                 }
                 else {
@@ -385,7 +387,7 @@ int strcomparelesskey(const void * a, const void * b) {
                 }
             }
             if((x == '\n') && (y == '\t')) {
-                if(rflag) {
+                if(options.rflag) {
                     return 1;
                 }
                 else {
@@ -400,7 +402,7 @@ int strcomparelesskey(const void * a, const void * b) {
 
                 /* First string smaller than second */
                 if(i == endpos1 && j!= endpos2) {
-                    if(rflag) {
+                    if(options.rflag) {
                         return -1;
                     }
                     else {
@@ -410,7 +412,7 @@ int strcomparelesskey(const void * a, const void * b) {
 
                 /* Second string smaller than first */
                 if(i != endpos1 && j == endpos2) {
-                    if(rflag) {
+                    if(options.rflag) {
                         return 1;
                     }
                     else {
@@ -427,7 +429,7 @@ int strcomparelesskey(const void * a, const void * b) {
     } while(x == y && i < endpos1 && j < endpos2);
 
     /* Reverse sense of comparisons if rflag is set*/
-    if(rflag)
+    if(options.rflag)
         return y - x;
     else {
         return x - y;
@@ -666,7 +668,7 @@ int makeSortedRuns(FILE *datafile) {
             break;
 
         /* String or numeric sort... */
-        if(nflag)
+        if(options.nflag)
             qsort(buffer, lines, STRSIZE, numcompare);
         else
             qsort(buffer, lines, STRSIZE, strcompare);
@@ -716,8 +718,8 @@ int fillBuffer(FILE *datafile, bufType buffer) {
     for(k = 0; k < BUFSIZE;) {
         if(fgets(buffer[k], STRSIZE, datafile)) {
             /* Check for duplicate lines */
-            if(uflag && k) {
-                if(nflag && (numcompare((void *)buffer[k], (void *)buffer[k - 1]) == 0))
+            if(options.uflag && k) {
+                if(options.nflag && (numcompare((void *)buffer[k], (void *)buffer[k - 1]) == 0))
                     continue;
                 else if(strcompare((void *)buffer[k], (void *)buffer[k - 1]) == 0) {
                     continue;
@@ -759,7 +761,7 @@ void merge(FILE *f1, FILE *f2, FILE *f3) {
 
     while(1) {
         while(i < line1.nlines && j < line2.nlines && k < result.nlines) {
-            if(nflag)
+            if(options.nflag)
                 cmp = numcompare((void *)line1.line[i], (void *)line2.line[j]);
             else
                 cmp = strcompare((void *)line1.line[i], (void *)line2.line[j]);
@@ -772,7 +774,7 @@ void merge(FILE *f1, FILE *f2, FILE *f3) {
             }
             else {
                 strcpy(result.line[k++], line1.line[i++]);
-                if(uflag)
+                if(options.uflag)
                     j++;
             }
         }
@@ -1054,6 +1056,25 @@ void handleOnlyMerges(int numFiles, char *mergefiles[16]) {
     handleMerges(numFiles, 'o');
 }
 
+void show_help(void) {
+    const char *help_text =
+"Usage: msort [options]... [FILE]...\n\
+     Ordering options:\n\
+     -b, ignore leading blanks\n\
+     -d, consider only blanks and alphanumeric characters\n\
+     -f, fold lower case to upper case characters\n\
+     -h, show help and exit\n\
+     -i, consider only printable characters\n\
+     -n, compare according to string numerical value\n\
+     -r, reverse the result of comparisons\n\
+     -k, sort via a key\n\
+     -m, merge already sorted files; do not sort\n\
+     -o, write result to FILE instead of standard output\n\
+     -u, output only the first of an equal run\n\
+";
+    printf("%s", help_text);
+}
+
 /**
  * @brief Main function
  *
@@ -1069,53 +1090,61 @@ int main(int argc, char *argv[]) {
     char c, *inputfiles[16] = {NULL}, *mergefiles[16] = {NULL}, output_name[16], line[STRSIZE];
     int i, numinput = 0, runs = 0;
 
-    while ((c = getopt(argc, argv, "bdfik:mno:rt:u")) != -1) {
+    while ((c = getopt(argc, argv, "bdfhik:mno:rt:u")) != -1) {
         switch (c) {
             case 'b':
-                bflag = 1;	/* Ignore leading blanks */
+                options.bflag = 1;	/* Ignore leading blanks */
                 break;
             case 'd':
-                dflag = 1;	/* Dictionary order */
+                options.dflag = 1;	/* Dictionary order */
                 break;
             case 'f':
-                fflag = 1;	/* Ignore case */
+                options.fflag = 1;	/* Ignore case */
+                break;
+            case 'h':
+                options.hflag = 1; /* Show help and exit */
                 break;
             case 'i':
-                iflag = 1;	/* Ignore non-printing */
+                options.iflag = 1;	/* Ignore non-printing */
                 break;
             case 'k':
-                kflag = 1;	/* Key */
+                options.kflag = 1;	/* Key */
                 strcpy(key1.line, optarg);
                 getkey(&key1);
                 break;
             case 'm':
-                mflag = 1;	/* Merge already sorted files */
+                options.mflag = 1;	/* Merge already sorted files */
                 break;
             case 'n':
-                nflag = 1;	/* Numeric sort */
+                options.nflag = 1;	/* Numeric sort */
                 break;
             case 'o':
-                oflag = 1;	/* Output to a file */
+                options.oflag = 1;	/* Output to a file */
                 outFilename = optarg;
                 break;
             case 'r':
-                rflag = 1;	/* Reverse sort */
+                options.rflag = 1;	/* Reverse sort */
                 break;
             case 't':
-                tflag = 1;	/* Separator over non-blank to blank transition */
+                options.tflag = 1;	/* Separator over non-blank to blank transition */
                 sep = optarg;
                 break;
             case 'u':
-                uflag = 1;	/* Only unique lines based on keys */
+                options.uflag = 1;	/* Only unique lines based on keys */
                 break;
             case '?':
-                err = 1;	/* Option not in given list */
+                options.err = 1;	/* Option not in given list */
                 fprintf(stderr, "Refer README.md for more information.\n");
                 exit(EINVAL);
         }
     }
 
-    if((dflag + iflag + nflag) > 1) {
+    if (options.hflag) {
+        show_help();
+        return 0;
+    }
+
+    if((options.dflag + options.iflag + options.nflag) > 1) {
         /* Undefined behaviour */
         fprintf(stderr, "The behaviour is undefined for combinations of [-dni] options.\n");
     }
@@ -1131,7 +1160,7 @@ int main(int argc, char *argv[]) {
     else if(optind < argc) {
         /* Take arguments after the command line options */
         while(optind < argc) {
-            if(mflag)
+            if(options.mflag)
                 mergefiles[numinput++] = argv[optind++];
             else
                 inputfiles[numinput++] = argv[optind++];
@@ -1139,13 +1168,13 @@ int main(int argc, char *argv[]) {
     }
 
 
-    if((numinput == 0) && mflag) {
+    if((numinput == 0) && options.mflag) {
         /* No files specified to be merged */
         fprintf(stderr, "No files to be merged.\nRefer README.md for more information.\n");
         exit(EINVAL);
     }
 
-    if(datafile == stdin && !mflag) {
+    if(datafile == stdin && !options.mflag) {
         /* STDIN as input */
         if((c = fgetc(datafile)) == -1)
             exit(0);
@@ -1164,7 +1193,7 @@ int main(int argc, char *argv[]) {
         /* Rename file to desired name */
         rename("temp0", outFilename);
     }
-    else if(datafile != stdin && !mflag) {
+    else if(datafile != stdin && !options.mflag) {
         /* Files as input */
 
         for(i = 0; i < numinput; i++) {
@@ -1198,7 +1227,7 @@ int main(int argc, char *argv[]) {
         /* Rename file to desired file name */
         rename("output0", outFilename);
     }
-    else if(mflag) {
+    else if(options.mflag) {
         /* Only merge input files*/
         handleOnlyMerges(numinput, mergefiles);
 
@@ -1207,7 +1236,7 @@ int main(int argc, char *argv[]) {
     }
 
 
-    if(!oflag) {
+    if(!options.oflag) {
         /* Print sorted output on terminal */
         datafile = fopen(outFilename, "r");
         while(fgets(line, STRSIZE, datafile)) {
