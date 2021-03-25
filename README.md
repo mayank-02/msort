@@ -22,6 +22,9 @@ It uses external sorting mechanism to sort files of **any** size.
 Follow following steps to install msort in your system
 
 ```bash
+# Run all autotools in the right order
+>  autoreconf --install
+
 # Generate Makefile from Makefile.in
 > ./configure
 
@@ -103,33 +106,34 @@ A pathname of a file(text files only) to be sorted or merged. If no file operand
 
 ## Usage
 
-```
+```bash
 > msort -bdf infile.txt
 
 Sorts infile.txt ignoring leading spaces and case, according to dictionary order and then outputs the result on the screen
 ```
 
-```
+```bash
 > msort -nru -k2,2 infile.txt -o outfile.txt
 
 Sorts infile.txt according to 2nd column, numerically and in reverse order.
 Also, all duplicate lines are supressed. Result is stored in outfile.txt.
 ```
 
-```
+```bash
 > msort -k4.2,4.8 -t, infile.txt
 
 Sorts infile.txt according contents between 2nd character of 4th <,> separated
 field and 8th character of 4th <,> separated field.
 ```
 
-```
+```bash
 > msort -m infile1.txt infile2.txt
 
 Only merges both the files and outputs to stdout.
 ```
 
 Note: Use LC_ALL = C before using linux sort to match outputs
+
 ```bash
 > LC_ALL = C sort -k4.2,4.8 -t, infile.txt
 ```
@@ -213,7 +217,9 @@ sudo make install
 
 6. [Automake](http://mij.oltrelinux.com/devel/autoconf-automake/)
 
-7. Books :
+7. [Autotools Tutorial](http://mij.oltrelinux.com/devel/autoconf-automake/)
+
+8. Books :
    + The C Programming Language by Kernighan and Ritchie :
    Referred to sorting algorithms like quicksort and also on how to write comparator functions for qsort().
    + Fundamentals of Data Structures by Ellis Horowitz and Sartaj Sahni : Referred for external sorting and various sorting algorithms.
