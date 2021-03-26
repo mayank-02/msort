@@ -1,4 +1,5 @@
 #include "msort.h"
+#include "log.h"
 
 struct Options options;
 

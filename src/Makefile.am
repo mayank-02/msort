@@ -5,4 +5,4 @@ AM_LDFLAGS = -lm
 # this lists the binaries to produce, the (non-PHONY, binary) targets in
 # the previous manual Makefile
 bin_PROGRAMS = msort
-msort_SOURCES = msort.c msort.h
+msort_SOURCES = msort.c msort.h log.c log.h

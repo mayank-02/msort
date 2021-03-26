@@ -1,3 +1,6 @@
+#ifndef MSORT_H
+#define MSORT_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -70,3 +73,5 @@ void handleOnlyMerges(int numFiles, char *mergefiles[16]);
 int strcompare(const void * a, const void * b);
 int strcomparelesskey(const void * a, const void * b );
 int numcompare(const void * a, const void * b);
+
+#endif
