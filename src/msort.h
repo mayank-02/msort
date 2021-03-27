@@ -11,7 +11,7 @@
 #include <locale.h>
 
 #define STRSIZE 1024
-#define BUFSIZE 4096
+#define BUFSIZE 1024
 #define EPSILON 2.2204460492503131E-16
 
 typedef char stringType[STRSIZE];
