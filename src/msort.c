@@ -1109,6 +1109,10 @@ int main(int argc, char *argv[]) {
                 options.iflag = 1;	/* Ignore non-printing */
                 break;
             case 'k':
+                if(options.kflag == 1) {  /* No support for multiple keys */
+                    fprintf(stderr, "Multiple keys is not supported.\n");
+                    exit(EINVAL);
+                }
                 options.kflag = 1;	/* Key */
                 strcpy(key1.line, optarg);
                 getkey(&key1);
